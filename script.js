@@ -713,7 +713,6 @@ function setupCartPage() {
   showCart();
 
 // Clear Cart button
-
 document.getElementById("clear-cart").addEventListener("click", function () {
 
   saveData("cart", []);
