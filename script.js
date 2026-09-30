@@ -1,4 +1,14 @@
-/* 1. PRODUCT DATA */
+/* =========================================================
+   Toy Haven - script.js
+   This ONE file is used by all 6 pages.
+   Each setup function first checks if its element exists on the
+   current page. If not, it stops (return) so nothing breaks.
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. PRODUCT DATA (an array of objects)
+   --------------------------------------------------------- */
 var products = [
   { id: 1, name: "Dragon Knight Figure", category: "Figurines", price: 4500, image: "images/dragon-knight.jpg", description: "A hand-painted dragon knight with a movable sword and shield. Stands 18 cm tall." },
   { id: 2, name: "Space Explorer Figure", category: "Figurines", price: 3800, image: "images/space-explorer.jpg", description: "An astronaut figure with a jetpack and a display stand. A great desk collectible." },
@@ -22,9 +32,11 @@ var TAX_RATE = 0.10;      // 10% tax
 var featuredIds = [1, 5, 7, 10];
 
 
-/*  2. REUSABLE HELPER FUNCTIONS (used on many pages) */
+/* ---------------------------------------------------------
+   2. REUSABLE HELPER FUNCTIONS (used on many pages)
+   --------------------------------------------------------- */
 
-// Get an array from localStorage
+// Get an array from localStorage (or an empty array if nothing saved yet)
 function getData(key) {
   var text = localStorage.getItem(key);
   if (text === null) {
@@ -33,12 +45,12 @@ function getData(key) {
   return JSON.parse(text);
 }
 
-// Save an array into localStorage
+// Save an array into localStorage (localStorage only stores text, so we use JSON)
 function saveData(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
-// Turn 4500 into "LKR 4,500" Salli Salli
+// Turn 4500 into "LKR 4,500"
 function formatPrice(amount) {
   return "LKR " + amount.toLocaleString("en-US");
 }
@@ -82,7 +94,7 @@ function isValidEmail(email) {
   return true;
 }
 
-// Put an error message under a form field
+// Put an error message under a form field (empty text clears the error)
 function setError(id, message) {
   var element = document.getElementById(id);
   if (element !== null) {
@@ -91,7 +103,11 @@ function setError(id, message) {
 }
 
 
-/*  3. CART FUNCTIONS */
+/* ---------------------------------------------------------
+   3. CART FUNCTIONS
+   The cart is an array like [ {id: 1, quantity: 2}, ... ]
+   saved in localStorage under the key "cart".
+   --------------------------------------------------------- */
 
 // Update the number badge next to "Cart" in the menu
 function updateCartCount() {
@@ -106,7 +122,7 @@ function updateCartCount() {
   }
 }
 
-// Add a product to the cart
+// Add a product to the cart (or increase its quantity if already there)
 function addToCart(id) {
   var cart = getData("cart");
   var found = false;
@@ -127,7 +143,7 @@ function addToCart(id) {
   showMessage(findProduct(id).name + " added to cart");
 }
 
-// Change the quantity by +1 or -1
+// Change the quantity by +1 or -1 (quantity never goes below 1)
 function changeQuantity(id, change) {
   var cart = getData("cart");
   for (var i = 0; i < cart.length; i++) {
@@ -153,7 +169,7 @@ function removeFromCart(id) {
   saveData("cart", newCart);
 }
 
-// Work out subtotal, shipping, tax and total
+// Work out subtotal, shipping, tax and total (used on cart AND checkout pages)
 function getCartTotals() {
   var cart = getData("cart");
   var subtotal = 0;
@@ -175,7 +191,11 @@ function getCartTotals() {
 }
 
 
-/*  4. WISHLIST FUNCTIONS */
+/* ---------------------------------------------------------
+   4. WISHLIST FUNCTIONS
+   The wishlist is an array like [ {id: 3}, {id: 7}, ... ]
+   saved in localStorage under the key "wishlist".
+   --------------------------------------------------------- */
 
 function isInWishlist(id) {
   var wishlist = getData("wishlist");
@@ -211,7 +231,9 @@ function toggleWishlist(id) {
   saveData("wishlist", newList);
 }
 
-/* 5. PRODUCT CARDS (used on the home page and products page) */
+/* ---------------------------------------------------------
+   5. PRODUCT CARDS (used on the home page and products page)
+   --------------------------------------------------------- */
 
 // Build the HTML text for one product card
 function createProductCard(product, showDetails) {
@@ -231,7 +253,7 @@ function createProductCard(product, showDetails) {
 
   return `
     <article class="card">
-      <img class="product-img" src="${product.image}" alt="${product.name}" width="400" height="300">
+      <img class="product-img" src="${product.image}" alt="${product.name}" width="400" height="300" loading="lazy">
       <div class="card-body">
         <p class="category">${product.category}</p>
         <h3>${product.name}</h3>
@@ -245,7 +267,7 @@ function createProductCard(product, showDetails) {
     </article>`;
 }
 
-// Make the buttons inside a container work
+// Make the buttons inside a container work (called after cards are created)
 function attachProductButtons(container) {
   // "Add to Cart" buttons
   var cartButtons = container.querySelectorAll(".add-to-cart");
@@ -256,13 +278,13 @@ function attachProductButtons(container) {
     });
   }
 
-  // Heart buttons
+  // Heart (wishlist) buttons
   var heartButtons = container.querySelectorAll(".wish-btn");
   for (var j = 0; j < heartButtons.length; j++) {
     heartButtons[j].addEventListener("click", function () {
       var id = Number(this.getAttribute("data-id"));
       toggleWishlist(id);
-
+      // Change how the heart looks
       if (isInWishlist(id)) {
         this.innerHTML = "&#9829;";
         this.classList.add("active");
@@ -275,7 +297,7 @@ function attachProductButtons(container) {
     });
   }
 
-  // "View details" buttons
+  // "View details" buttons (open the popup)
   var detailButtons = container.querySelectorAll(".details-btn");
   for (var k = 0; k < detailButtons.length; k++) {
     detailButtons[k].addEventListener("click", function () {
@@ -285,7 +307,9 @@ function attachProductButtons(container) {
 }
 
 
-/* 6. NAVIGATION BURGER MENU - all pages */
+/* ---------------------------------------------------------
+   6. NAVIGATION (hamburger menu) - all pages
+   --------------------------------------------------------- */
 function setupMenu() {
   var menuButton = document.getElementById("menu-button");
   var navMenu = document.getElementById("nav-menu");
@@ -295,7 +319,7 @@ function setupMenu() {
 
   menuButton.addEventListener("click", function () {
     navMenu.classList.toggle("open");
-    menuButton.classList.toggle("open"); 
+    menuButton.classList.toggle("open");   // this makes the lines turn into an X
 
     if (navMenu.classList.contains("open")) {
       menuButton.setAttribute("aria-expanded", "true");
@@ -306,7 +330,9 @@ function setupMenu() {
 }
 
 
-/* 7. HOME PAGE */
+/* ---------------------------------------------------------
+   7. HOME PAGE
+   --------------------------------------------------------- */
 
 // Hero slider: shows one banner at a time and rotates automatically
 var currentSlide = 0;
@@ -449,7 +475,9 @@ function setupNewsletter() {
 }
 
 
-/* 8. PRODUCTS PAGE (search, filter, sort, popup) */
+/* ---------------------------------------------------------
+   8. PRODUCTS PAGE (search, filter, sort, popup)
+   --------------------------------------------------------- */
 
 // Show the products that match the search box, category and sort choice
 function showProducts() {
@@ -570,7 +598,9 @@ function closeModal() {
 }
 
 
-/* 9. WISHLIST PAGE */
+/* ---------------------------------------------------------
+   9. WISHLIST PAGE
+   --------------------------------------------------------- */
 function showWishlist() {
   var grid = document.getElementById("wishlist-grid");
   var wishlist = getData("wishlist");
@@ -588,7 +618,7 @@ function showWishlist() {
 
     html = html + `
       <article class="card wishlist-card">
-        <img class="product-img" src="${product.image}" alt="${product.name}" width="400" height="300">
+        <img class="product-img" src="${product.image}" alt="${product.name}" width="400" height="300" loading="lazy">
         <div class="card-body">
           <p class="category">${product.category}</p>
           <h3>${product.name}</h3>
@@ -629,7 +659,9 @@ function setupWishlistPage() {
 }
 
 
-/* 10. CART PAGE */
+/* ---------------------------------------------------------
+   10. CART PAGE
+   --------------------------------------------------------- */
 function showCart() {
   var body = document.getElementById("cart-body");
   var cart = getData("cart");
@@ -651,16 +683,16 @@ function showCart() {
             <span>${product.name}</span>
           </div>
         </td>
-        <td>${formatPrice(product.price)}</td>
-        <td>
+        <td data-label="Price">${formatPrice(product.price)}</td>
+        <td data-label="Quantity">
           <div class="qty-box">
             <button class="qty-minus" data-id="${product.id}" aria-label="Decrease quantity of ${product.name}">-</button>
             <span class="qty-number">${cart[i].quantity}</span>
             <button class="qty-plus" data-id="${product.id}" aria-label="Increase quantity of ${product.name}">+</button>
           </div>
         </td>
-        <td>${formatPrice(itemSubtotal)}</td>
-        <td><button class="icon-btn remove-item" data-id="${product.id}" aria-label="Remove ${product.name} from cart" title="Remove">&#128465;</button></td>
+        <td data-label="Subtotal" class="cart-subtotal">${formatPrice(itemSubtotal)}</td>
+        <td class="cart-remove"><button class="icon-btn remove-item" data-id="${product.id}" aria-label="Remove ${product.name} from cart" title="Remove">&#128465;</button></td>
       </tr>`;
   }
 
@@ -712,14 +744,18 @@ function setupCartPage() {
 
   showCart();
 
-// Clear Cart button
-document.getElementById("clear-cart").addEventListener("click", function () {
-
-  saveData("cart", []);
-  showCart();
-  updateCartCount();
-
-});
+  // Clear Cart button
+  document.getElementById("clear-cart").addEventListener("click", function () {
+    if (getData("cart").length === 0) {
+      showMessage("Your cart is already empty");
+      return;
+    }
+    if (confirm("Remove all items from your cart?")) {
+      saveData("cart", []);
+      showCart();
+      updateCartCount();
+    }
+  });
 
   // Proceed to Checkout button
   document.getElementById("checkout-button").addEventListener("click", function () {
@@ -732,7 +768,9 @@ document.getElementById("clear-cart").addEventListener("click", function () {
 }
 
 
-/* 11. CHECKOUT PAGE */
+/* ---------------------------------------------------------
+   11. CHECKOUT PAGE
+   --------------------------------------------------------- */
 
 // Show the items and totals in the Order Summary box
 function showOrderSummary() {
@@ -863,7 +901,9 @@ function setupCheckoutPage() {
 }
 
 
-/* 12. FEEDBACK PAGE */
+/* ---------------------------------------------------------
+   12. FEEDBACK PAGE (form + FAQ accordion)
+   --------------------------------------------------------- */
 function setupFeedbackPage() {
   var form = document.getElementById("feedback-form");
   if (form === null) {
@@ -932,13 +972,15 @@ function setupFaq() {
 }
 
 
-/* 13. EXTRA COOL COOL EFFECTS: reveal on scroll, loader, PWA */
+/* ---------------------------------------------------------
+   13. EXTRA EFFECTS: reveal on scroll, loader, PWA
+   --------------------------------------------------------- */
 
 // Elements with class "reveal" fade in when they scroll into view
 function revealOnScroll() {
   var items = document.querySelectorAll(".reveal");
   for (var i = 0; i < items.length; i++) {
-    var top = items[i].getBoundingClientRect().top;
+    var top = items[i].getBoundingClientRect().top;   // distance from top of screen
     if (top < window.innerHeight - 60) {
       items[i].classList.add("visible");
     }
@@ -956,15 +998,20 @@ function setupLoader() {
   });
 }
 
-// Register the service worker.
+// Register the service worker (needed for the PWA). It only works on https or localhost.
+// We wait for the "load" event so that saving the files does not slow the page down.
 function registerServiceWorker() {
   if ("serviceWorker" in navigator && window.location.protocol !== "file:") {
-    navigator.serviceWorker.register("sw.js");
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js");
+    });
   }
 }
 
 
-/* 14. START EVERYTHING when the page loads */
+/* ---------------------------------------------------------
+   14. START EVERYTHING when the page loads
+   --------------------------------------------------------- */
 updateCartCount();
 setupLoader();
 setupMenu();
