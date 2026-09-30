@@ -712,18 +712,15 @@ function setupCartPage() {
 
   showCart();
 
-  // Clear Cart button
-  document.getElementById("clear-cart").addEventListener("click", function () {
-    if (getData("cart").length === 0) {
-      showMessage("Your cart is already empty");
-      return;
-    }
-    if (confirm("Remove all items from your cart?")) {
-      saveData("cart", []);
-      showCart();
-      updateCartCount();
-    }
-  });
+// Clear Cart button
+
+document.getElementById("clear-cart").addEventListener("click", function () {
+
+  saveData("cart", []);
+  showCart();
+  updateCartCount();
+
+});
 
   // Proceed to Checkout button
   document.getElementById("checkout-button").addEventListener("click", function () {
