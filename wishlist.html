@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist | Toy Haven</title>
+  <meta name="description" content="Your Toy Haven wishlist and collection. Mark items as Interested, Owned or Not Interested.">
+  <meta name="theme-color" content="#ffc93c">
+
+  <!-- Favicon and PWA manifest -->
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="images/icon-192.png">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Google Fonts (optional, the page still works without them) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&amp;family=Nunito:wght@400;700&amp;display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Loading spinner (hidden by script.js when the page has loaded) -->
+  <div id="loader" class="loader" aria-hidden="true">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Header and navigation bar -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">Toy Haven</a>
+
+      <button id="menu-button" class="menu-button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="nav-menu" class="nav-menu" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="wishlist.html" class="active" aria-current="page">Wishlist</a></li>
+          <li><a href="cart.html">Cart <span id="cart-count" class="cart-count">0</span></a></li>
+          <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section container" aria-labelledby="wishlist-title">
+      <h1 id="wishlist-title" class="page-title no-top-margin">My Wishlist</h1>
+      <div id="wishlist-grid" class="product-grid"></div>
+    </section>
+  </main>
+
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h2>Toy Haven</h2>
+          <p>Collectible figurines, toys, board games and diecast cars in one happy place.</p>
+        </div>
+        <div>
+          <h2>Quick links</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Need help?</h2>
+          <ul>
+            <li><a href="feedback.html">Contact us</a></li>
+            <li><a href="feedback.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="copyright">&copy; 2026 Toy Haven. This is a student project, so no real orders are taken.</p>
+    </div>
+  </footer>
+
+  <!-- Small message that pops up at the bottom of the screen -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

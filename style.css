@@ -1,0 +1,1158 @@
+/* =========================================================
+   Toy Haven - style.css
+   Used by all 6 pages.
+   Mobile-first: the base styles are for phones, and the
+   media queries at each section add changes for bigger screens.
+   ========================================================= */
+
+
+/* ---------- 1. Colour palette and fonts (CSS variables) ---------- */
+:root {
+  --navy: #22284a;
+  --cream: #fff8e8;
+  --yellow: #ffc93c;
+  --coral: #d63f33;
+  --teal: #0b7a7c;
+  --white: #ffffff;
+  --error: #b3261e;
+
+  --heading-font: "Fredoka", "Trebuchet MS", sans-serif;
+  --body-font: "Nunito", Arial, sans-serif;
+}
+
+
+/* ---------- 2. Basic page styles ---------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;   /* smooth scrolling */
+}
+
+body {
+  margin: 0;
+  font-family: var(--body-font);
+  background: var(--cream);
+  color: var(--navy);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: var(--heading-font);
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--teal);
+}
+
+/* Keeps the page centred with space at the sides */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Only top and bottom spacing here, so it does not remove the side spacing from .container */
+.section {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  margin: 32px 0 16px;
+}
+
+.no-top-margin {
+  margin-top: 0;
+}
+
+.center-text {
+  text-align: center;
+  margin-top: 28px;
+}
+
+/* Text only screen readers can see (used for hidden labels) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Shows which element the keyboard is on */
+:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+}
+
+
+/* ---------- 3. Page loader (spinner) ---------- */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  transition: opacity 0.4s, visibility 0.4s;
+}
+
+.loader.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.spinner {
+  width: 56px;
+  height: 56px;
+  border: 6px solid var(--yellow);
+  border-top-color: var(--coral);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ---------- 4. Header and navigation ---------- */
+.site-header {
+  background: var(--white);
+  border-bottom: 3px solid var(--navy);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 68px;
+}
+
+.logo {
+  font-family: var(--heading-font);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--navy);
+  text-decoration: none;
+  background: var(--yellow);
+  border: 3px solid var(--navy);
+  border-radius: 12px;
+  padding: 2px 14px;
+  box-shadow: 3px 3px 0 var(--navy);
+}
+
+/* Hamburger button (3 lines) */
+.menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.menu-button span {
+  display: block;
+  height: 4px;
+  background: var(--navy);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+/* When the menu is open, the 3 lines turn into an X */
+.menu-button.open span:nth-child(1) {
+  transform: translateY(10px) rotate(45deg);
+}
+
+.menu-button.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-button.open span:nth-child(3) {
+  transform: translateY(-10px) rotate(-45deg);
+}
+
+/* Phone menu: hidden until the button is clicked */
+.nav-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-bottom: 3px solid var(--navy);
+}
+
+.nav-menu.open {
+  display: block;
+}
+
+.nav-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 8px 20px 16px;
+}
+
+.nav-menu a {
+  display: block;
+  padding: 10px 0;
+  color: var(--navy);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+  color: var(--coral);
+}
+
+/* Number badge next to "Cart" */
+.cart-count {
+  display: inline-block;
+  min-width: 22px;
+  padding: 0 6px;
+  margin-left: 4px;
+  background: var(--coral);
+  color: var(--white);
+  border-radius: 11px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+
+/* ---------- 5. Buttons ---------- */
+.btn {
+  display: inline-block;
+  font-family: var(--heading-font);
+  font-size: 1rem;
+  font-weight: 500;
+  background: var(--yellow);
+  color: var(--navy);
+  border: 3px solid var(--navy);
+  border-radius: 12px;
+  padding: 8px 18px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 3px 3px 0 var(--navy);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--navy);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--navy);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-red {
+  background: var(--coral);
+  color: var(--white);
+}
+
+.btn-white {
+  background: var(--white);
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.95rem;
+}
+
+/* Small square button (heart, trash) */
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  line-height: 1;
+  background: var(--white);
+  color: var(--coral);
+  border: 3px solid var(--navy);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+}
+
+.icon-btn.active {
+  background: var(--coral);
+  color: var(--white);
+}
+
+/* Button that looks like a text link */
+.link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 10px;
+  font: inherit;
+  font-weight: 700;
+  color: var(--teal);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+/* ---------- 6. Home page: hero slider ---------- */
+.hero {
+  position: relative;
+  height: 320px;
+  margin: 20px auto;
+  border: 3px solid var(--navy);
+  border-radius: 18px;
+  box-shadow: 4px 4px 0 var(--navy);
+  overflow: hidden;
+}
+
+/* Every slide sits on top of the others; only .active is visible */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 56px;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s, visibility 0.8s;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Each slide has a background photo. The colour shows if the photo is missing */
+.slide-1 { background-color: #ffc93c; background-image: url("images/hero-1.jpg"); }
+.slide-2 { background-color: #8fe3d5; background-image: url("images/hero-2.jpg"); }
+.slide-3 { background-color: #ffb3a7; background-image: url("images/hero-3.jpg"); }
+.slide-4 { background-color: #a9d4ff; background-image: url("images/hero-4.jpg"); }
+
+/* Light panel behind the text so it is easy to read on top of the photo */
+.slide-text {
+  max-width: 380px;
+  padding: 16px 20px;
+  background: rgba(255, 248, 232, 0.93);
+  border: 3px solid var(--navy);
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 var(--navy);
+}
+
+.slide-text h2 {
+  font-size: 1.8rem;
+}
+
+.slide-text p {
+  margin: 0 0 16px;
+}
+
+
+.slide-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--navy);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--navy);
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.slide-btn:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.slide-btn.prev { left: 10px; }
+.slide-btn.next { right: 10px; }
+
+
+/* ---------- 7. Product cards and grid ---------- */
+.card {
+  background: var(--white);
+  border: 3px solid var(--navy);
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 var(--navy);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 4px 8px 0 var(--navy);
+}
+
+.product-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-bottom: 3px solid var(--navy);
+}
+
+.card-body {
+  padding: 14px;
+}
+
+.card-body h3 {
+  font-size: 1.15rem;
+  margin-bottom: 4px;
+}
+
+.category {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--teal);
+}
+
+.price {
+  margin: 4px 0 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-actions .add-to-cart {
+  flex: 1;
+}
+
+/* Phone: 1 column. Bigger screens get more columns (see section 16) */
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 30px 10px;
+  font-weight: 700;
+}
+
+
+/* ---------- 8. Home page: product of the day ---------- */
+.potd-card {
+  display: grid;
+}
+
+.potd-card .card-body {
+  padding: 20px;
+}
+
+.potd-card h3 {
+  font-size: 1.5rem;
+}
+
+
+/* ---------- 9. Home page: newsletter ---------- */
+.newsletter {
+  background: var(--teal);
+  color: var(--white);
+  border-top: 3px solid var(--navy);
+  border-bottom: 3px solid var(--navy);
+  padding: 40px 0;
+  text-align: center;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.newsletter-message {
+  min-height: 1.6em;
+  margin: 12px 0 0;
+  font-weight: 700;
+}
+
+
+/* ---------- 10. Forms (used on checkout, feedback, newsletter) ---------- */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--navy);
+  background: var(--white);
+  border: 3px solid var(--navy);
+  border-radius: 10px;
+}
+
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.error-text {
+  min-height: 1.4em;
+  margin: 4px 0 0;
+  color: var(--error);
+  font-weight: 700;
+}
+
+.form-card {
+  background: var(--white);
+  border: 3px solid var(--navy);
+  border-radius: 18px;
+  box-shadow: 4px 4px 0 var(--navy);
+  padding: 20px;
+}
+
+/* Green success box (checkout popup and feedback message) */
+.success-popup {
+  display: none;
+  align-items: center;
+  gap: 14px;
+  background: var(--teal);
+  color: var(--white);
+  border: 3px solid var(--navy);
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 var(--navy);
+  padding: 14px 18px;
+  margin: 16px 0;
+}
+
+.success-popup a {
+  color: var(--white);
+  font-weight: 700;
+}
+
+.success-popup p {
+  margin: 0;
+}
+
+.success-popup.show {
+  display: flex;
+  animation: popIn 0.5s ease;
+}
+
+.success-popup .check {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--teal);
+  font-size: 1.6rem;
+  font-weight: 700;
+  animation: checkPop 0.6s ease 0.2s both;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes checkPop {
+  0%   { transform: scale(0); }
+  70%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+
+/* ---------- 11. Products page: search, filter, sort ---------- */
+.toolbar {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.result-count {
+  margin: 0 0 16px;
+  font-weight: 700;
+}
+
+
+/* ---------- 12. Product details popup (modal) ---------- */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(34, 40, 74, 0.75);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-box {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--white);
+  border: 3px solid var(--navy);
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 var(--navy);
+  animation: popIn 0.3s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+}
+
+.modal-content {
+  display: grid;
+}
+
+.modal-text {
+  padding: 20px;
+}
+
+
+/* ---------- 13. Cart page ---------- */
+.cart-layout {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  background: var(--white);
+  border: 3px solid var(--navy);
+  border-radius: 14px;
+}
+
+.cart-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 12px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 2px solid #e7e0cc;
+}
+
+.cart-table th {
+  background: var(--yellow);
+  font-family: var(--heading-font);
+}
+
+.cart-product {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+}
+
+.cart-product img {
+  width: 72px;
+  height: 56px;
+  object-fit: cover;
+  border: 2px solid var(--navy);
+  border-radius: 8px;
+}
+
+.qty-box {
+  display: inline-flex;
+  align-items: center;
+  background: var(--white);
+  border: 3px solid var(--navy);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.qty-box button {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: var(--yellow);
+  color: var(--navy);
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.qty-number {
+  min-width: 36px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.cart-actions {
+  margin-top: 16px;
+}
+
+.summary-box {
+  background: var(--white);
+  border: 3px solid var(--navy);
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 var(--navy);
+  padding: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.summary-total {
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 2px solid var(--navy);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.summary-buttons {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+
+/* ---------- 14. Checkout page ---------- */
+.checkout-layout {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.summary-list {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e7e0cc;
+}
+
+.summary-item img {
+  width: 52px;
+  height: 40px;
+  object-fit: cover;
+  border: 2px solid var(--navy);
+  border-radius: 6px;
+}
+
+.summary-item-name {
+  flex: 1;
+}
+
+.note {
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+
+
+/* ---------- 15. Wishlist and Feedback pages ---------- */
+/* Wishlist cards: the buttons always sit at the bottom, side by side */
+.wishlist-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.wishlist-card .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-align: center;
+}
+
+.wishlist-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;   /* pushes the buttons to the bottom of the card */
+}
+
+.wishlist-actions .btn {
+  flex: 1;
+  padding: 6px 8px;
+}
+
+.contact-layout {
+  display: grid;
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.contact-list li {
+  margin-bottom: 8px;
+}
+
+.hours-table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 380px;
+}
+
+.hours-table th,
+.hours-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 2px solid #e7e0cc;
+}
+
+.faq-item {
+  background: var(--white);
+  border: 3px solid var(--navy);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  text-align: left;
+  font-family: var(--heading-font);
+  font-size: 1.05rem;
+  color: var(--navy);
+  background: var(--white);
+  border: none;
+  cursor: pointer;
+}
+
+.faq-question::after {
+  content: "+";
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.faq-question[aria-expanded="true"]::after {
+  content: "-";
+}
+
+.faq-answer {
+  margin: 0;
+  padding: 0 16px 16px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
+/* ---------- 16. Footer ---------- */
+.site-footer {
+  background: var(--navy);
+  color: var(--white);
+  padding: 32px 0 16px;
+}
+
+.footer-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.site-footer h2 {
+  font-size: 1.2rem;
+}
+
+.site-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer li {
+  margin-bottom: 6px;
+}
+
+.site-footer a {
+  color: var(--yellow);
+}
+
+.site-footer :focus-visible {
+  outline-color: var(--yellow);
+}
+
+.copyright {
+  margin: 24px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid #4b5280;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+
+/* ---------- 17. Small pop-up message (toast) ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 20px);
+  max-width: 90%;
+  padding: 12px 20px;
+  background: var(--navy);
+  color: var(--white);
+  border: 3px solid var(--yellow);
+  border-radius: 12px;
+  font-weight: 700;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+  z-index: 150;
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+
+/* ---------- 18. Reveal on scroll ---------- */
+/* Starts hidden. JavaScript adds .visible when the element scrolls into view */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+
+/* =========================================================
+   MEDIA QUERIES (bigger screens)
+   ========================================================= */
+
+/* Small tablets (520px and up) */
+@media (min-width: 520px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .newsletter-form {
+    flex-direction: row;
+  }
+
+  .newsletter-form .form-control {
+    flex: 1;
+  }
+
+}
+
+/* Tablets (768px and up) */
+@media (min-width: 768px) {
+  /* Menu becomes a normal row of links, hamburger is hidden */
+  .menu-button {
+    display: none;
+  }
+
+  .nav-menu {
+    display: block;
+    position: static;
+    background: none;
+    border-bottom: none;
+  }
+
+  .nav-menu ul {
+    display: flex;
+    gap: 28px;
+    padding: 0;
+  }
+
+  .nav-menu a {
+    padding: 6px 0;
+    border-bottom: 3px solid transparent;
+  }
+
+  .nav-menu a:hover,
+  .nav-menu a.active {
+    border-bottom-color: var(--coral);
+  }
+
+  .hero {
+    height: 360px;
+  }
+
+  .slide {
+    padding: 0 80px;
+  }
+
+  .slide-text h2 {
+    font-size: 2.6rem;
+  }
+
+
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .potd-card {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .potd-card .product-img {
+    height: 100%;
+    aspect-ratio: auto;
+    border-bottom: none;
+    border-right: 3px solid var(--navy);
+  }
+
+  .modal-content {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .modal-content .product-img {
+    height: 100%;
+    aspect-ratio: auto;
+    border-bottom: none;
+    border-right: 3px solid var(--navy);
+  }
+
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  .contact-layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .contact-info {
+    padding-right: 48px;
+    border-right: 3px solid var(--navy);
+  }
+}
+
+/* Laptops and desktops (1000px and up) */
+@media (min-width: 1000px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .cart-layout,
+  .checkout-layout {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+  }
+}
+
+/* People who ask their device for less motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

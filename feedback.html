@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback &amp; Support | Toy Haven</title>
+  <meta name="description" content="Contact Toy Haven, send us feedback and read answers to common questions.">
+  <meta name="theme-color" content="#ffc93c">
+
+  <!-- Favicon and PWA manifest -->
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="images/icon-192.png">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Google Fonts (optional, the page still works without them) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&amp;family=Nunito:wght@400;700&amp;display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Loading spinner (hidden by script.js when the page has loaded) -->
+  <div id="loader" class="loader" aria-hidden="true">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Header and navigation bar -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">Toy Haven</a>
+
+      <button id="menu-button" class="menu-button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="nav-menu" class="nav-menu" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="wishlist.html">Wishlist</a></li>
+          <li><a href="cart.html">Cart <span id="cart-count" class="cart-count">0</span></a></li>
+          <li><a href="feedback.html" class="active" aria-current="page">Feedback</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="container" aria-labelledby="feedback-title">
+      <h1 id="feedback-title" class="page-title">Feedback &amp; Support</h1>
+
+      <div class="contact-layout">
+        <!-- Left: contact details -->
+        <div class="contact-info reveal">
+          <h2>Contact Us</h2>
+          <p>Questions about an order, a product or our website? We are happy to help.</p>
+          <ul class="contact-list">
+            <li><strong>Address:</strong> 12 Toy Street, Colombo, Sri Lanka</li>
+            <li><strong>Phone:</strong> +94 11 234 5678</li>
+            <li><strong>Email:</strong> support@toyhaven.example</li>
+          </ul>
+
+          <h3>Opening hours</h3>
+          <table class="hours-table">
+            <caption class="visually-hidden">Opening hours</caption>
+            <thead>
+              <tr><th scope="col">Day</th><th scope="col">Hours</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Monday - Friday</td><td>9:00 am - 6:00 pm</td></tr>
+              <tr><td>Saturday</td><td>10:00 am - 4:00 pm</td></tr>
+              <tr><td>Sunday</td><td>Closed</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Right: feedback form -->
+        <form id="feedback-form" class="form-card reveal" novalidate>
+          <h2>Send us a message</h2>
+          <div class="form-group">
+            <label for="fb-name">Name</label>
+            <input type="text" id="fb-name" class="form-control" placeholder="Enter your name">
+            <p id="fb-name-error" class="error-text" role="alert"></p>
+          </div>
+
+          <div class="form-group">
+            <label for="fb-email">Email</label>
+            <input type="email" id="fb-email" class="form-control" placeholder="Enter your email">
+            <p id="fb-email-error" class="error-text" role="alert"></p>
+          </div>
+
+          <div class="form-group">
+            <label for="fb-message">Message</label>
+            <textarea id="fb-message" class="form-control" placeholder="Type your message here"></textarea>
+            <p id="fb-message-error" class="error-text" role="alert"></p>
+          </div>
+
+          <button type="submit" class="btn btn-red">Submit</button>
+
+          <div id="feedback-success" class="success-popup" role="alert">
+            <span class="check" aria-hidden="true">&#10004;</span>
+            <p>Thank you! Your feedback has been sent.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- FAQ accordion -->
+    <section id="faq" class="section container reveal" aria-labelledby="faq-title">
+      <h2 id="faq-title">Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <h3><button class="faq-question" id="faq-q1" aria-expanded="false" aria-controls="faq-a1">How long does delivery take?</button></h3>
+        <p class="faq-answer" id="faq-a1" hidden>Most orders arrive within 3 to 5 working days. Delivery costs a flat LKR 400.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3><button class="faq-question" id="faq-q2" aria-expanded="false" aria-controls="faq-a2">Can I pay with cash?</button></h3>
+        <p class="faq-answer" id="faq-a2" hidden>Yes. Choose Cash on Delivery at checkout and pay when your order arrives.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3><button class="faq-question" id="faq-q3" aria-expanded="false" aria-controls="faq-a3">What does Interested, Owned or Not Interested mean?</button></h3>
+        <p class="faq-answer" id="faq-a3" hidden>These are labels for your wishlist. Use them to track which items you want, which you already have and which you have decided to skip.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3><button class="faq-question" id="faq-q4" aria-expanded="false" aria-controls="faq-a4">Can I return a product?</button></h3>
+        <p class="faq-answer" id="faq-a4" hidden>Yes. Unopened items can be returned within 14 days. Contact us using the form above.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3><button class="faq-question" id="faq-q5" aria-expanded="false" aria-controls="faq-a5">Are my cart and wishlist saved?</button></h3>
+        <p class="faq-answer" id="faq-a5" hidden>Yes. They are saved in your browser, so they will still be here when you come back on the same device.</p>
+      </div>
+    </section>
+  </main>
+
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h2>Toy Haven</h2>
+          <p>Collectible figurines, toys, board games and diecast cars in one happy place.</p>
+        </div>
+        <div>
+          <h2>Quick links</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Need help?</h2>
+          <ul>
+            <li><a href="feedback.html">Contact us</a></li>
+            <li><a href="feedback.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="copyright">&copy; 2026 Toy Haven. This is a student project, so no real orders are taken.</p>
+    </div>
+  </footer>
+
+  <!-- Small message that pops up at the bottom of the screen -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
