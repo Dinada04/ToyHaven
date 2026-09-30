@@ -3,7 +3,7 @@
    This one saves (caches) our files so the site can open even when offline.
    If you change your files, change the version number in CACHE_NAME. */
 
-var CACHE_NAME = "toy-haven-v4";
+var CACHE_NAME = "toy-haven-v5";
 
 var FILES_TO_CACHE = [
   "./",
